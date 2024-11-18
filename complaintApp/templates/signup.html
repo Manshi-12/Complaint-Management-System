@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #cbdff4;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 95%;
+            background-color: #003366;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .brand {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Signup Card Styles */
+        .signup-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .signup-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .signup-card h1 {
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            color: #003366;
+        }
+
+        .signup-card form div {
+            margin-bottom: 20px;
+        }
+
+        .signup-card label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .signup-card input {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .signup-card button {
+            width: 100%;
+            padding: 12px;
+            background-color: #8217c9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .signup-card p {
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .signup-card a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="brand">IssueInsight</div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+        </ul>
+    </div>
+
+    <!-- Signup Card -->
+    <div class="signup-card">
+        <h1>Sign Up</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Display errors if any -->
+            {% if form.errors %}
+                <div class="error">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <!-- Display username field errors  -->
+                {% if form.username.errors %}
+                    <div class="error">
+                        {{ form.username.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <!-- Display email field errors  -->
+                {% if form.email.errors %}
+                    <div class="error">
+                        {{ form.email.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password1" required>
+                <!-- Display password field errors -->
+                {% if form.password1.errors %}
+                    <div class="error">
+                        {{ form.password1.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="password2">Confirm Password:</label>
+                <input type="password" id="password2" name="password2" required>
+                <!-- Display password confirmation errors -->
+                {% if form.password2.errors %}
+                    <div class="error">
+                        {{ form.password2.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>

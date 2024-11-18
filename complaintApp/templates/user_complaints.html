@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Complaints</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #deefff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Centering Content */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 700px;
+            margin: auto; /* Centers horizontally */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center; /* Centers vertically */
+            align-items: center;    /* Centers vertically */
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .complaint-list {
+            text-align: left;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .complaint-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        .complaint-item:hover {
+            background-color: #f1f1f1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .button {
+            background-color: #002946;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #055995;
+        }
+        textarea {
+            width: 80%;
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            resize: none;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+        .search-bar:focus {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content Section -->
+    <div class="content-wrapper">
+        <div class="container">
+            <h1>Your Complaints</h1>
+            <input type="text" class="search-bar" placeholder="Search complaints..." onkeyup="filterComplaints()">
+            <div class="complaint-list" id="complaintList">
+                {% for complaint in complaints %}
+                    <div class="complaint-item">
+                        <strong>{{ complaint.title }}</strong> - <em>{{ complaint.status }}</em>
+                        <p>{{ complaint.description }}</p>
+                        <form method="post" action="{% url 'add_feedback' complaint.id %}">
+                            {% csrf_token %}
+                            <textarea name="feedback" placeholder="Add your feedback here"></textarea>
+                            <button type="submit" class="button">Submit Feedback</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="{% url 'dashboard' %}" class="button">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function filterComplaints() {
+            var input = document.querySelector('.search-bar');
+            var filter = input.value.toLowerCase();
+            var complaints = document.querySelectorAll('.complaint-item');
+
+            complaints.forEach(function(complaint) {
+                var title = complaint.querySelector('strong').textContent;
+                if (title.toLowerCase().indexOf(filter) > -1) {
+                    complaint.style.display = '';
+                } else {
+                    complaint.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

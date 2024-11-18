@@ -1,0 +1,229 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+        }
+        p {
+            color: #666;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .complaint-form {
+            margin-top: 20px;
+        }
+        .complaint-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .complaint-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ user.username }}</h1>
+        
+        <h2>Register a New Complaint</h2>
+        <form method="post" class="complaint-form">
+            {% csrf_token %}
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="academic">Academic</option>
+                    <option value="administrative">Administrative</option>
+                </select>
+            </div>
+            <div>
+                <label for="attachment">Attachment:</label>
+                <input type="file" id="attachment" name="attachment">
+            </div>
+            <button type="submit" class="button">Submit</button>
+        </form>
+        <a href="{% url 'user_complaints' %}" class="button">Your Complaints</a>
+        <a href="{% url 'logout' %}" class="button">Logout</a>
+        <a href="{% url 'signout' %}" class="button">Sign Out</a>
+    </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+       body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e3f2fd; /* Light Blue */
+    padding: 50px;
+}
+
+.container {
+    background-color: #ffffff; /* White */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 43, 76, 0.1);
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+}
+
+h1 {
+    color: #00509e; /* Dark Blue */
+}
+
+h2 {
+    color: #333333; /* Dark Grey */
+}
+
+p {
+    color: #4a4a4a; /* Medium Grey */
+}
+
+.button {
+    background-color: #007bff; /* Bright Blue */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker Blue on hover */
+}
+
+.complaint-form {
+    margin-top: 20px;
+}
+
+.complaint-form div {
+    margin-bottom: 15px;
+}
+
+.complaint-item {
+    background-color: #f4f4f4; /* Light Grey */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #02094c;">
+        <a class="navbar-brand" href="#">Issue Insight</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #f9f9f9;" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #f9f9f9;" href="{% url 'user_complaints' %}">Your Complaints</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #f9f9f9;" href="{% url 'logout' %}">Logout</a>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Welcome, {{ user.username }}</h1>
+        
+        <h2>Register a New Complaint</h2>
+        <form method="post" class="complaint-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category" class="form-control" required>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="academic">Academic</option>
+                    <option value="administrative">Administrative</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="attachment">Attachment:</label>
+                <input type="file" id="attachment" name="attachment" class="form-control">
+            </div>
+            <button type="submit" class="button">Submit</button>
+        </form>
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

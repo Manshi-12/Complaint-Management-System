@@ -1,0 +1,378 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Complaint Management System</title>
+</head>
+<body>
+    <h1>Welcome to the College Complaint Management System</h1>
+    <p>Features:</p>
+    <ul>
+        <li>Register and track complaints</li>
+        <li>View complaint status</li>
+        <li>Admin panel for managing complaints</li>
+    </ul>
+    <a href="{% url 'signup' %}">Sign Up</a> | <a href="{% url 'login' %}">Login</a>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Complaint Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    {% load static %}
+    <style>
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+}
+
+.navbar {
+    background-color: #012a53; /* Dark Blue */
+}
+
+.navbar-brand,
+.nav-link {
+    color: #ffffff !important; /* White */
+}
+
+.carousel-item {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 80, 158, 0.6); /* Semi-transparent Blue */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1,
+h2 {
+    color: #00509e; /* Dark Blue */
+}
+
+.features-section,
+.about-section,
+.contact-section {
+    padding: 70px 0;
+    text-align: center;
+}
+
+.features-section {
+    background-color: #e3f2fd; /* Light Blue */
+}
+
+.feature-box {
+    padding: 20px;
+    background-color: #ffffff; /* White */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.about-section,
+.contact-section {
+    background-color: #ffffff; /* White */
+}
+
+.about-section p,
+.contact-section p {
+    font-size: 1.1em;
+    color: #4a4a4a; /* Dark Grey */
+    line-height: 1.8;
+    text-align: left;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+footer {
+    background-color: #003f6b; /* Very Dark Blue */
+    color: #ffffff; /* White */
+    text-align: center;
+    padding: 50px 0;
+}
+
+footer a {
+    color: #ffffff; /* White */
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* General Styles */
+.section-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #00509e; /* Dark Blue */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.about-section,
+.contact-section {
+    padding: 60px 0;
+    background-color: #f0f8ff; /* Light Blue */
+}
+
+.about-text,
+.contact-text {
+    font-size: 18px;
+    color: #4a4a4a; /* Dark Grey */
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.contact-link {
+    color: #0074d9; /* Bright Blue */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+/* Image Styling */
+.img-fluid {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover Effects */
+.contact-section img:hover,
+.about-section img:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+}
+
+/* About Us Styles */
+.about-feature {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #e3f2fd; /* Light Blue */
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.about-feature h4 {
+    color: #00509e; /* Dark Blue */
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.about-feature p {
+    color: #4a4a4a; /* Dark Grey */
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+.about-feature i {
+    color: #0074d9; /* Bright Blue */
+}
+
+.img-fluid {
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.img-fluid:hover {
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">IssueInsight</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Full-Screen Carousel -->
+    <div id="complaintCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('../static/images/C1.jpg');">
+                <div class="carousel-caption">
+                    <h1 style="color: #ffffff;">Efficient Complaint Management</h1>
+                    <p style="color: #ffffff;">Track and resolve your issues with ease.</p>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('../static/images/C2.jpg');">
+                <div class="carousel-caption">
+                    <h1 style="color: #ffffff;">Transparency & Accountability</h1>
+                    <p style="color: #ffffff;">Stay informed with real-time status updates.</p>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('../static/images/C3.jpg');">
+                <div class="carousel-caption">
+                    <h1 style="color: #ffffff;">Admin Control Panel</h1>
+                    <p style="color: #ffffff;">Streamline management and resolution processes.</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#complaintCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#complaintCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Use Our System?</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <h4>Easy Registration</h4>
+                        <p>Register complaints with a simple and intuitive interface. Log your issues and ensure they
+                            are addressed efficiently.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <h4>Real-Time Tracking</h4>
+                        <p>Stay updated on the status of your complaints at all times. Receive notifications and alerts
+                            for progress and resolution.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <h4>Admin Dashboard</h4>
+                        <p>Admins can efficiently manage and resolve complaints using a streamlined dashboard with
+                            powerful tracking tools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="../static/images/a.jpg" class="img-fluid rounded shadow-lg"
+                        alt="About Us Image">
+                </div>
+                <div class="col-md-6">
+                    <div class="about-feature">
+                        <i class="fas fa-bullseye fa-2x">  Our Mission</i>
+                        
+                        <p>To provide a transparent, efficient platform where students and faculty can resolve their
+                            concerns swiftly, fostering a harmonious campus environment.</p>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-shield-alt fa-2x">  Trust & Accountability</i>
+                        
+                        <p>We believe in creating an accountable community by providing users with real-time updates,
+                            ensuring no issue goes unheard.</p>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-rocket fa-2x">  Founded on Speed</i>
+                    
+                        <p>Launched in 2024, our system empowers users to track complaints from initiation to resolution
+                            without any delays, enhancing trust within the campus.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6"><br /><br /><br /><br />
+                    <p class="contact-text">If you have any questions or require assistance, please don't hesitate to reach out to our support team. We are here to help you with any inquiries, troubleshooting issues, or general support. Our team is available 24/7, and we aim to respond to all queries within 24 hours.</p>
+                    <p><strong>Email:</strong> <a href="#"
+                            class="contact-link">support@issueinsight.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+1234567890" class="contact-link">+91-4681073489</a></p>
+                </div>
+                <div class="col-md-6">
+                    <img src="../static/images/p.jpg" class="img-fluid rounded" alt="Contact Us Image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 College Complaint Management. All rights reserved.</p>
+            <p>
+                <a href="#about">About Us</a> |
+                <a href="#contact">Contact Us</a> |
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('.carousel').carousel({
+            interval: 2000, // Automatically move to next slide every 3 seconds
+            pause: 'hover' // Pause carousel on hover
+        });
+    </script>
+
+</body>
+
+</html>
